@@ -20,6 +20,9 @@ public class DefaultTrackableEventHandler : MonoBehaviour, ITrackableEventHandle
 
     #endregion // PRIVATE_MEMBER_VARIABLES
 
+    public GameObject UI;
+    public GameObject gameManajer;
+
     #region UNTIY_MONOBEHAVIOUR_METHODS
 
     protected virtual void Start()
@@ -47,12 +50,20 @@ public class DefaultTrackableEventHandler : MonoBehaviour, ITrackableEventHandle
         {
             Debug.Log("Trackable " + mTrackableBehaviour.TrackableName + " found");
             OnTrackingFound();
+
+            UI.SetActive(true);
+
+            gameManajer.SetActive(true);
         }
         else if (previousStatus == TrackableBehaviour.Status.TRACKED &&
                  newStatus == TrackableBehaviour.Status.NOT_FOUND)
         {
             Debug.Log("Trackable " + mTrackableBehaviour.TrackableName + " lost");
             OnTrackingLost();
+
+            UI.SetActive(false);
+
+            gameManajer.SetActive(false);
         }
         else
         {
@@ -60,6 +71,9 @@ public class DefaultTrackableEventHandler : MonoBehaviour, ITrackableEventHandle
             // Vuforia is starting, but tracking has not been lost or found yet
             // Call OnTrackingLost() to hide the augmentations
             OnTrackingLost();
+
+            UI.SetActive(false);
+            gameManajer.SetActive(false);
         }
     }
 
